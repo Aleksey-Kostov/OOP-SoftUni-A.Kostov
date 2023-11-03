@@ -34,4 +34,3 @@ class Section:
             result += task.details() + "\n"
 
         return result
-
