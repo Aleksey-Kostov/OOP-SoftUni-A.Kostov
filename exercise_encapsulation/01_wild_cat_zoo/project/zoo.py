@@ -33,7 +33,7 @@ class Zoo:
             if worker.name == worker_name:
                 self.workers.remove(worker)
                 return f"{worker_name} fired successfully"
-            return f"There is no {worker_name} in the zoo"
+        return f"There is no {worker_name} in the zoo"
 
     def pay_workers(self) -> str:
         total_salaries = sum([worker.salary for worker in self.workers])
