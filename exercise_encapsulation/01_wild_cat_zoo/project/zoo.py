@@ -63,7 +63,7 @@ class Zoo:
                 tigers.append(repr(animal))
             else:
                 cheetahs.append(repr(animal))
-        result = [f"You have {len(self.animals)} animals", f"----- {len(lions)} Lions:", ]
+        result = [f"You have {len(self.animals)} animals", f"----- {len(lions)} Lions:"]
         result.extend(lions)
         result.append(f"----- {len(tigers)} Tigers:")
         result.extend(tigers)
@@ -83,7 +83,7 @@ class Zoo:
                 caretakers.append(repr(worker))
             else:
                 vets.append(repr(worker))
-        result = [f"You have {len(self.workers)} workers", f"----- {len(keepers)} Keepers:", ]
+        result = [f"You have {len(self.workers)} workers", f"----- {len(keepers)} Keepers:"]
         result.extend(keepers)
         result.append(f"----- {len(caretakers)} Caretakers:")
         result.extend(caretakers)
