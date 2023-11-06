@@ -83,7 +83,7 @@ class Zoo:
                 caretakers.append(repr(worker))
             else:
                 vets.append(repr(worker))
-        result = [f"You have {len(self.animals)} workers", f"----- {len(keepers)} Keepers:", ]
+        result = [f"You have {len(self.workers)} workers", f"----- {len(keepers)} Keepers:", ]
         result.extend(keepers)
         result.append(f"----- {len(caretakers)} Caretakers:")
         result.extend(caretakers)
