@@ -2,8 +2,8 @@ from project.food.food import Food
 
 
 class Desert(Food):
-    def __init__(self, calories: float, grams, name, price):
-        super().__init__(grams, name, price)
+    def __init__(self, name: str, price: float, grams: float, calories: int):
+        super().__init__(name, price, grams)
         self.__calories = calories
 
     @property
