@@ -11,5 +11,5 @@ class Player:
         return self.__name
 
     def __str__(self):
-        return (f"Player: {self.__name}\n Sprint: {self.__sprint}\n "
-                f"Dribble: {self.__dribble}\n Passing: {self.__passing}\n Shooting: {self.__shooting}")
+        return (f"Player: {self.__name}\nSprint: {self.__sprint}\n"
+                f"Dribble: {self.__dribble}\nPassing: {self.__passing}\nShooting: {self.__shooting}")
