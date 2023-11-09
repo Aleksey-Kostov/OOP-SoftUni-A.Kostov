@@ -18,11 +18,11 @@ class Hotel:
         self.rooms.append(room)
 
     def take_room(self, room_number, people):
-        # room = [r for r in self.rooms if r.number == room_number][0]
-        # return room.take_room(people)
-        for room in self.rooms:
-            if room.number == room_number:
-                return room.take_room(people)
+        room = [r for r in self.rooms if r.number == room_number][0]
+        return room.take_room(people)
+        # for room in self.rooms:
+        #     if room.number == room_number:
+        #         return room.take_room(people)
 
     def free_room(self, room_number):
         room = [r for r in self.rooms if r.number == room_number][0]
