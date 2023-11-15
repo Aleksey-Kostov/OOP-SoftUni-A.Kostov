@@ -41,6 +41,22 @@ class Storage:
         if category:
             self.categories.remove(category)
 
+    def delete_topic(self, topic_id):
+        topic = self.__find_object(topic_id, self.topics)
+        if topic:
+            self.topics.remove(topic)
+
+    def delete_document(self, document_id):
+        document = self.__find_object(document_id, self.documents)
+        if document:
+            self.documents.remove(document)
+
+    def get_document(self, document_id):
+        return self.__find_object(document_id, self.documents)
+
+    def __repr__(self):
+        return "\n".join([str(d) for d in self.documents])
+
     @staticmethod
     def __find_object(object_id, object_collection):
         return next((o for o in object_collection if o.id == object_id), None)
