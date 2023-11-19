@@ -2,7 +2,7 @@ from project.animals.animal import Mammal
 
 
 class Mouse(Mammal):
-    ALLOWED_FOOD = ["Vegetables", "Fruits"]
+    ALLOWED_FOOD = ["Vegetable", "Fruit"]
     WEIGHT_INCREMENT = 0.10
 
     def make_sound(self):
@@ -18,7 +18,7 @@ class Dog(Mammal):
 
 
 class Cat(Mammal):
-    ALLOWED_FOOD = ["Meat", "Vegetables"]
+    ALLOWED_FOOD = ["Meat", "Vegetable"]
     WEIGHT_INCREMENT = 0.30
 
     def make_sound(self):
