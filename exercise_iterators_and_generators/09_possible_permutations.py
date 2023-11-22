@@ -5,4 +5,3 @@ def possible_permutations(ls):
         for i in range(len(ls)):
             for perm in possible_permutations(ls[:i] + ls[i + 1:]):
                 yield [ls[i]] + perm
-
