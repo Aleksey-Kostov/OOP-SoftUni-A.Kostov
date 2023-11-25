@@ -5,7 +5,7 @@ class store_results:
     def __call__(self, *args, **kwargs):
         with open("result.txt", "a") as file:
             result = self.func(*args, **kwargs)
-            file.write(f"Function {self.func.__name__} was called. Result: {result}\n")
+            file.write(f"Function '{self.func.__name__}' was called. Result: {result}\n")
 
 
 @store_results
