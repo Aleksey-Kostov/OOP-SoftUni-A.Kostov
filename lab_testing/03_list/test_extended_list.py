@@ -1,6 +1,6 @@
 from unittest import TestCase, main
 
-from extended_list import IntegerList
+#from extended_list import IntegerList
 
 
 class TestIntegerList(TestCase):
@@ -64,6 +64,18 @@ class TestIntegerList(TestCase):
             self.integer_list.insert(100, 5)
 
         self.assertEqual("Index is out of range", str(ex.exception))
+
+    def test_insert_float_element_on_valid_index_raises_value_error(self):
+        with self.assertRaises(ValueError) as ve:
+            self.integer_list.insert(0, 5.5)
+
+        self.assertEqual("Element is not Integer", str(ve.exception))
+
+    def test_get_biggest_expect_success(self):
+        self.assertEqual(3, self.integer_list.get_biggest())
+
+    def test_get_index_expect_success(self):
+        self.assertEqual(1, self.integer_list.get_index(2))
 
 
 if __name__ == '__main__':
