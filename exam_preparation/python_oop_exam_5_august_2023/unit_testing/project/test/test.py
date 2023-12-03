@@ -12,6 +12,12 @@ class TestSecondHandCar(TestCase):
         self.assertEqual(100000, self.car.mileage)
         self.assertEqual(20000, self.car.price)
 
+    def test_init_type(self):
+        self.assertIsInstance(self.car.model, str)
+        self.assertIsInstance(self.car.car_type, str)
+        self.assertIsInstance(self.car.mileage, int)
+        self.assertIsInstance(self.car.price, float)
+
     def test_getter_price(self):
         with self.assertRaises(ValueError) as ve:
             self.car.price = 0
@@ -22,9 +28,14 @@ class TestSecondHandCar(TestCase):
             self.car.mileage = 99
         self.assertEqual("Please, second-hand cars only! Mileage must be greater than 100!", str(ve.exception))
 
-    def test_set_promotional_price_with_exception(self):
+    def test_set_promotional_price_with_exception_higher(self):
         with self.assertRaises(ValueError) as ve1:
             self.car.set_promotional_price(21000)
+        self.assertEqual("You are supposed to decrease the price!", str(ve1.exception))
+
+    def test_set_promotional_price_with_exception_equal(self):
+        with self.assertRaises(ValueError) as ve1:
+            self.car.set_promotional_price(20000)
         self.assertEqual("You are supposed to decrease the price!", str(ve1.exception))
 
     def test_set_promotional_price_with_not_exception(self):
