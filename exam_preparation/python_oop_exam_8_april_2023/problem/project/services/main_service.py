@@ -6,5 +6,5 @@ class MainService(BaseService):
         super().__init__(name, 30)
 
     def details(self):
-        return (f"{self.name} Main Service:"
-                f"Robots: {self._get_names()}")
+        return f"""{self.name} Secondary Service:
+Robots: {self._get_names()}"""
