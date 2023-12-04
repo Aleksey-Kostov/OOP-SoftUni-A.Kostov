@@ -12,19 +12,40 @@ class TestSecondHandCar(TestCase):
         self.assertEqual(100000, self.car.mileage)
         self.assertEqual(20000, self.car.price)
 
-    def test_getter_price(self):
+    def test_getter_price_more_less_than_one(self):
         with self.assertRaises(ValueError) as ve:
             self.car.price = 0
         self.assertEqual("Price should be greater than 1.0!", str(ve.exception))
 
-    def test_getter_mileage(self):
+    def test_getter_price_equal_to_one(self):
+        with self.assertRaises(ValueError) as ve:
+            self.car.price = 1
+        self.assertEqual("Price should be greater than 1.0!", str(ve.exception))
+
+    def test_getter_happy_price(self):
+        self.assertEqual(20000, self.car.price)
+
+    def test_getter_mileage_more_less_than_100(self):
         with self.assertRaises(ValueError) as ve:
             self.car.mileage = 99
         self.assertEqual("Please, second-hand cars only! Mileage must be greater than 100!", str(ve.exception))
 
-    def test_set_promotional_price_with_exception(self):
+    def test_getter_mileage_equal_to_100(self):
+        with self.assertRaises(ValueError) as ve:
+            self.car.mileage = 100
+        self.assertEqual("Please, second-hand cars only! Mileage must be greater than 100!", str(ve.exception))
+
+    def test_getter_happy_mileage(self):
+        self.assertEqual(100000, self.car.mileage)
+
+    def test_set_promotional_price_with_exception_more_less_than_price(self):
         with self.assertRaises(ValueError) as ve1:
             self.car.set_promotional_price(21000)
+        self.assertEqual("You are supposed to decrease the price!", str(ve1.exception))
+
+    def test_set_promotional_price_with_exception_equal_to_price(self):
+        with self.assertRaises(ValueError) as ve1:
+            self.car.set_promotional_price(20000)
         self.assertEqual("You are supposed to decrease the price!", str(ve1.exception))
 
     def test_set_promotional_price_with_not_exception(self):
