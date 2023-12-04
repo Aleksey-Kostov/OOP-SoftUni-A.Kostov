@@ -42,11 +42,13 @@ class TestSecondHandCar(TestCase):
         with self.assertRaises(ValueError) as ve1:
             self.car.set_promotional_price(21000)
         self.assertEqual("You are supposed to decrease the price!", str(ve1.exception))
+        self.assertEqual(20000, self.car.price)
 
     def test_set_promotional_price_with_exception_equal_to_price(self):
         with self.assertRaises(ValueError) as ve1:
             self.car.set_promotional_price(20000)
         self.assertEqual("You are supposed to decrease the price!", str(ve1.exception))
+        self.assertEqual(20000, self.car.price)
 
     def test_set_promotional_price_with_not_exception(self):
         new_price = self.car.set_promotional_price(10000)
@@ -56,6 +58,8 @@ class TestSecondHandCar(TestCase):
     def test_need_repair_with_repair_impossible(self):
         self.car.repair_price = 15000
         self.assertEqual('Repair is impossible!', self.car.need_repair(self.car.repair_price, "test"))
+        self.assertEqual([], self.car.repairs)
+        self.assertEqual(20000, self.car.price)
 
     def test_need_repair_with_repair(self):
         self.car.repair_price = 5000
@@ -65,17 +69,43 @@ class TestSecondHandCar(TestCase):
         self.assertEqual("Price has been increased due to repair charges.",
                          self.car.need_repair(self.car.repair_price, "test"))
 
+        self.car.need_repair(self.car.repair_price, "test")
+        self.assertEqual(35000, self.car.price)
+        self.assertEqual(['test', 'test', 'test'], self.car.repairs)
+        self.assertEqual("Price has been increased due to repair charges.",
+                         self.car.need_repair(self.car.repair_price, "test"))
+
+    def test_need_repair_with_repair_equal(self):
+        self.car.repair_price = 10000
+        self.car.need_repair(self.car.repair_price, "test")
+        self.assertEqual(30000, self.car.price)
+        self.assertEqual(['test'], self.car.repairs)
+        self.assertEqual("Price has been increased due to repair charges.",
+                         self.car.need_repair(self.car.repair_price, "test"))
+
     def test_diff_car_type(self):
         self.car2 = SecondHandCar("BMW", "Test", 100000, 20000.00)
-        self.assertEqual('Cars cannot be compared. Type mismatch!', self.car.__gt__(self.car2))
+        self.assertEqual('Cars cannot be compared. Type mismatch!', self.car > self.car2)
 
     def test_same_car_type(self):
-        self.car2 = SecondHandCar("BMW", "Sedan", 100000, 20000.00)
-        self.assertEqual(self.car.price > self.car2.price, self.car.__gt__(self.car2))
+        self.car2 = SecondHandCar("BMW", "Sedan", 100000, 10000.00)
+        self.assertTrue(self.car.price > self.car2.price)
+        self.assertFalse(self.car.price < self.car2.price)
 
-    def test_string(self):
-        self.assertEqual(f"""Model {self.car.model} | Type {self.car.car_type} | Milage {self.car.mileage}km
-Current price: {self.car.price:.2f} | Number of Repairs: {len(self.car.repairs)}""", str(self.car))
+    def test_string_no_repairs(self):
+        self.assertEqual(f"""Model Seat | Type Sedan | Milage 100000km
+Current price: 20000.00 | Number of Repairs: 0""", str(self.car))
+
+    def test_string_1_repairs(self):
+        self.car.need_repair(8000, "test")
+        self.assertEqual(f"""Model Seat | Type Sedan | Milage 100000km
+Current price: 28000.00 | Number of Repairs: 1""", str(self.car))
+
+    def test_string_2_repairs(self):
+        self.car.need_repair(5000, "test")
+        self.car.need_repair(5000, "test")
+        self.assertEqual(f"""Model Seat | Type Sedan | Milage 100000km
+Current price: 30000.00 | Number of Repairs: 2""", str(self.car))
 
 
 if __name__ == '__main__':
