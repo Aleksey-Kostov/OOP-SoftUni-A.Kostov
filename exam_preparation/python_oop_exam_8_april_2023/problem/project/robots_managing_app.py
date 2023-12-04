@@ -27,24 +27,45 @@ class RobotsManagingApp:
         return f"{robot_type} is successfully added."
 
     def add_robot_to_service(self, robot_name: str, service_name: str):
-        if self._check_robots(robot_name) is None:
+        obj_robot = self._check_object(robot_name, self.robots)
+        obj_service = self._check_object(service_name, self.services)
+        if obj_robot.EXPECTED_TYPE_SERVICE != obj_service.__class__.__name__:
             return "Unsuitable service."
-        if self._check_capacity() is None:
+        if len(obj_service.robots) >= obj_service.capacity:
             raise Exception("Not enough capacity for this robot!")
-        self.robots.remove(robot_name)
-        self.VALID_TYPE_SERVICE[service_name].robots.append(robot_name)
+        self.robots.remove(obj_robot)
+        obj_service.robots.append(obj_robot)
+        return f"Successfully added {robot_name} to {service_name}."
 
     def remove_robot_from_service(self, robot_name: str, service_name: str):
-        pass
+        object_service = self._check_object(service_name, self.services)
+        robot = [r for r in object_service.robots if r.name == robot_name]
+        if not robot:
+            raise Exception("No such robot in this service!")
+        object_robot = robot[0]
+        object_service.robots.remove(object_robot)
+        self.robots.append(object_robot)
+        return f"Successfully removed {robot_name} from {service_name}."
+
+    def feed_all_robots_from_service(self, service_name: str):
+        obj_service = self._check_object(service_name, self.services)
+        [r.eating() for r in obj_service.robots]
+        return f"Robots fed: {len(obj_service.robots)}."
 
     def service_price(self, service_name: str):
-        pass
+        obj_service = self._check_object(service_name, self.services)
+        total_price = sum([r.price for r in obj_service.robots])
+        return f"The value of service {service_name} is {total_price:.2f}."
 
     def __str__(self):
-        pass
+        return "\n".join([s.details() for s in self.services])
 
-    def _check_robots(self, name_robot):
-        return next((r for r in self.robots if name_robot == r.EXPECTED_TYPE_SERVICE), None)
+    @staticmethod
+    def _check_object(name_obj, collection):
+        return next((o for o in collection if o.name == name_obj), None)
 
-    def _check_capacity(self):
-        return next((s for s in self.services if s.capacity <= len(s.robots)), None)
+    # def _check_capacity(self):
+    #     return next((s for s in self.services if s.capacity > len(s.robots)), None)
+    #
+    # def _check_service(self, robot_name):
+    #     return next((r for r in self.services if r.name == robot_name), None)
