@@ -25,7 +25,7 @@ class ChristmasPastryShopApp:
     def add_booth(self, type_booth: str, booth_number: int, capacity: int):
         obj_booth = self.TYPE_OF_BOOTHS[type_booth](booth_number, capacity)
         if type_booth not in self.TYPE_OF_BOOTHS:
-            raise Exception(f"Booth number {obj_booth.booth_number} already exists!")
+            raise Exception(f"{type_booth} is not a valid booth!")
         if obj_booth.booth_number in [b.booth_number for b in self.booths]:
             raise Exception(f"Booth number {obj_booth.booth_number} already exists!")
         self.booths.append(obj_booth)
