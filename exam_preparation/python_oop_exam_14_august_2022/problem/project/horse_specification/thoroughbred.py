@@ -5,4 +5,8 @@ class Thoroughbred(Horse):
     MAXIMUM_SPEED = 140
 
     def train(self):
-        self.speed += 3
+        if self.speed <= 137:
+            self.speed += 3
+        else:
+            self.speed = self.MAXIMUM_SPEED
+

@@ -5,4 +5,7 @@ class Appaloosa(Horse):
     MAXIMUM_SPEED = 120
 
     def train(self):
-        self.speed += 2
+        if self.speed <= 118:
+            self.speed += 2
+        else:
+            self.speed = self.MAXIMUM_SPEED

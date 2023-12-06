@@ -45,7 +45,7 @@ class HorseRaceApp:
             raise Exception(f"Jockey {jockey_name} could not be found!")
         if last_horse_obj is None:
             raise Exception(f"Horse breed {horse_type} could not be found!")
-        if not last_horse_obj.is_taken and jokey_obj.horse:
+        if jokey_obj.horse:
             return f"Jockey {jockey_name} already has a horse."
         if last_horse_obj and jokey_obj:
             jokey_obj.horse = last_horse_obj
