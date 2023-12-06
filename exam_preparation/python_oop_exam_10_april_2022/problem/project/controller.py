@@ -37,9 +37,43 @@ class Controller:
             return f"{player_name} sustained successfully with {supplies_obj.name}."
 
     def duel(self, first_player_name: str, second_player_name: str):
-        pass
+        player_one_obj = next((p for p in self.players if p.name == first_player_name), None)
+        player_two_obj = next((p for p in self.players if p.name == second_player_name), None)
+        if player_one_obj.stamina == 0:
+            return f"Player {player_one_obj.name} does not have enough stamina."
+        if player_two_obj.stamina == 0:
+            return f"Player {player_two_obj.name} does not have enough stamina."
+        self._reduce_stamina(player_one_obj, player_two_obj)
+        if self._stamina_set(player_one_obj, player_two_obj) is not None:
+            return self._stamina_set(player_one_obj, player_two_obj)
+        if self._get_winner(player_one_obj, player_two_obj) is not None:
+            return self._get_winner(player_one_obj, player_two_obj)
 
     def next_day(self):
         pass
 
+    @staticmethod
+    def _reduce_stamina(player_one, player_two):
+        if player_one.stamina < player_two.stamina:
+            player_two.stamina -= player_one.stamina / 2
+        else:
+            player_one.stamina -= player_two.stamina / 2
 
+    @staticmethod
+    def _stamina_set(player_one, player_two):
+        winner_name = ""
+        if player_one.stamina <= 0:
+            player_one.stamina = 0
+            winner_name = player_two.name
+            return f"Winner: {winner_name}"
+        if player_two.stamina <= 0:
+            player_two.stamina = 0
+            winner_name = player_one.name
+            return f"Winner: {winner_name}"
+
+    @staticmethod
+    def _get_winner(player_one, player_two):
+        if player_one.stamina > player_two.stamina:
+            return f"Winner: {player_one.name}"
+        elif player_two.stamina > player_one.stamina:
+            return f"Winner: {player_two.name}"

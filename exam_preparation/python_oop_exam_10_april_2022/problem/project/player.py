@@ -37,7 +37,7 @@ class Player:
 
     @stamina.setter
     def stamina(self, value):
-        if  value > 100 or value < 0:
+        if value > 100 or value < 0:
             raise ValueError('Stamina not valid!')
         self.__stamina = value
 
