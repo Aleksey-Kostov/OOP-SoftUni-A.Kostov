@@ -12,10 +12,9 @@ class Supply(ABC):
 
     @name.setter
     def name(self, value):
-        if value.strip() == '':
+        if value == '':
             raise ValueError("Name cannot be an empty string.")
         self.__name = value
-
 
     @property
     def energy(self):
@@ -29,4 +28,4 @@ class Supply(ABC):
 
     @abstractmethod
     def details(self):
-        pass
+        ...

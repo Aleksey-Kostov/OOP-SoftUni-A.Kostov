@@ -2,12 +2,12 @@ from project.supply.supply import Supply
 
 
 class Player:
-    COLLECTION = []
-    def __init__(self, name: str, age: int, stamina: int):
+    players_names = []
+
+    def __init__(self, name: str, age: int, stamina: int = 100):
         self.name = name
         self.age = age
         self.stamina = stamina
-        self.__need_sustenance = True
 
     @property
     def name(self):
@@ -15,11 +15,11 @@ class Player:
 
     @name.setter
     def name(self, value):
-        if value.strip() == '':
+        if value == '':
             raise ValueError("Name not valid!")
-        if value in self.COLLECTION:
+        elif value in Player.players_names:
             raise Exception(f"Name {value} is already used!")
-        self.COLLECTION.append(value)
+        Player.players_names.append(value)
         self.__name = value
 
     @property
@@ -38,14 +38,13 @@ class Player:
 
     @stamina.setter
     def stamina(self, value):
-        if  value > 100 or value < 0:
-            raise ValueError('Stamina not valid!')
+        if not 0 <= value <= 100:
+            raise ValueError("Stamina not valid!")
         self.__stamina = value
 
     @property
     def need_sustenance(self):
-        if self.stamina < 100:
-            return self.__need_sustenance
+        return self.__stamina < 100
 
     def _sustain_player(self, supply: Supply):
         if self.stamina + supply.energy > 100:
@@ -53,7 +52,8 @@ class Player:
         else:
             self.stamina += supply.energy
 
+    def __lt__(self, other):
+        return self.stamina < other.stamina
+
     def __str__(self):
         return f"Player: {self.name}, {self.age}, {self.stamina}, {self.need_sustenance}"
-
-
