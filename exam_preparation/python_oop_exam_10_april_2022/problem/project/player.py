@@ -44,8 +44,7 @@ class Player:
 
     @property
     def need_sustenance(self):
-        if self.stamina < 100:
-            return self.__need_sustenance
+        return self.stamina < 100
 
     def _sustain_player(self, supply: Supply):
         if self.stamina + supply.energy > 100:
