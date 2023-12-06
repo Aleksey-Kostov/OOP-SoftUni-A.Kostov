@@ -7,7 +7,6 @@ class Player:
         self.name = name
         self.age = age
         self.stamina = stamina
-        self.__need_sustenance = True
 
     @property
     def name(self):
