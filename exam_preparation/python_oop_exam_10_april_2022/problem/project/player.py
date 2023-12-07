@@ -3,7 +3,7 @@ from project.supply.supply import Supply
 
 class Player:
     COLLECTION = []
-    def __init__(self, name: str, age: int, stamina: int):
+    def __init__(self, name: str, age: int, stamina: int =100):
         self.name = name
         self.age = age
         self.stamina = stamina

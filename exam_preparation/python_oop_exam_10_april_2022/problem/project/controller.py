@@ -11,14 +11,16 @@ class Controller:
         self.players = []
         self.supplies = []
 
-    def add_player(self, player: Player):
-        if player in self.players:
-            return
+    def add_player(self, *player: Player):
+        for player in self.players:
+            if player in self.players:
+                return
         self.players.append(player)
         return f"Successfully added: {', '.join([p.name for p in self.players])}"
 
-    def add_supply(self, supply: Supply):
-        self.supplies.append(supply)
+    def add_supply(self, *supply: Supply):
+        for s in supply:
+            self.supplies.append(supply)
 
     def sustain(self, player_name: str, sustenance_type: str):
         player_obj = next((p for p in self.players if p.name == player_name), None)
@@ -39,10 +41,7 @@ class Controller:
     def duel(self, first_player_name: str, second_player_name: str):
         player_one_obj = next((p for p in self.players if p.name == first_player_name), None)
         player_two_obj = next((p for p in self.players if p.name == second_player_name), None)
-        if player_one_obj.stamina == 0:
-            return f"Player {player_one_obj.name} does not have enough stamina."
-        if player_two_obj.stamina == 0:
-            return f"Player {player_two_obj.name} does not have enough stamina."
+        self._check_if_the_players_cannot_duel(player_one_obj, player_two_obj)
         self._reduce_stamina(player_one_obj, player_two_obj)
         if self._stamina_set(player_one_obj, player_two_obj) is not None:
             return self._stamina_set(player_one_obj, player_two_obj)
@@ -50,13 +49,30 @@ class Controller:
             return self._get_winner(player_one_obj, player_two_obj)
 
     def next_day(self):
-        pass
+        for p in self.players:
+            if p.stamina - (p.age * 2) < 0:
+                p.stamina = 0
+            else:
+                p.stamina -= (p.age * 2)
+        for p in self.players:
+            self.sustain(p.name, "Food")
+            self.sustain(p.name, "Drink")
+
+    def __str__(self):
+        result = []
+        for p in self.players:
+            result.append("\n".join(p.__str__()))
+        for s in self.supplies:
+            result.append("\n".join(s.details()))
+        return result
+
+
 
     @staticmethod
     def _reduce_stamina(player_one, player_two):
         if player_one.stamina < player_two.stamina:
             player_two.stamina -= player_one.stamina / 2
-        else:
+        elif player_one.stamina > player_two.stamina:
             player_one.stamina -= player_two.stamina / 2
 
     @staticmethod
@@ -77,3 +93,10 @@ class Controller:
             return f"Winner: {player_one.name}"
         elif player_two.stamina > player_one.stamina:
             return f"Winner: {player_two.name}"
+    @staticmethod
+    def _check_if_the_players_cannot_duel(*players):
+        result = []
+        for player in players:
+            if player.stamina == 100:
+                result.append(f"Player {player.name} does not have enough stamina.")
+        return "\n".join(result)
