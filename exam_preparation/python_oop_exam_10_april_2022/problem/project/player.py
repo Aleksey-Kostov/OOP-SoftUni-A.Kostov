@@ -1,3 +1,5 @@
+from typing import List
+
 from project.supply.supply import Supply
 
 
@@ -45,11 +47,12 @@ class Player:
     def need_sustenance(self):
         return self.stamina < 100
 
-    def _sustain_player(self, supply: Supply):
-        if self.stamina + supply.energy > 100:
-            self.stamina = 100
-        else:
-            self.stamina += supply.energy
+    def _sustain_player(self, supply: List[Supply]):
+        for s in supply:
+            if self.stamina + s.energy > 100:
+                self.stamina = 100
+            else:
+                self.stamina += s.energy
 
     def __str__(self):
         return f"Player: {self.name}, {self.age}, {self.stamina}, {self.need_sustenance}"
