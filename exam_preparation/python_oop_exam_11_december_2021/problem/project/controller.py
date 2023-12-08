@@ -30,7 +30,7 @@ class Controller:
 
     def create_race(self, race_name: str):
         if race_name in [r.name for r in self.races]:
-            raise Exception(f"Driver {race_name} is already created!")
+            raise Exception(f"Race {race_name} is already created!")
         race_obj = Race(race_name)
         self.races.append(race_obj)
         return f"Race {race_name} is created."
