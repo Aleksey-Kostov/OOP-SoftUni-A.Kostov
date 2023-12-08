@@ -76,12 +76,10 @@ class Controller:
         if len(race_obj.drivers) < 3:
             raise Exception(f"Race {race_name} cannot start with less than 3 participants!")
         if len(race_obj.drivers) >= 3:
-            sorted_result = sorted(race_obj.drivers, key=lambda x: -x.car.speed_limit)
-            for result in sorted_result[:3]:
-                increase = [d.number_of_wins + 1 for d in result]
-                return (f"Driver {result.drivers.name} wins the {race_name} race with a "
-                        f"speed of {result.drivers.speed_limit}.")
-
-
-
-
+            sorted_driver = sorted(race_obj.drivers, key=lambda x: -x.car.speed_limit)
+            result = []
+            for driver in sorted_driver[:3]:
+                driver.number_of_wins += 1
+                result.append(f"Driver {driver.name} wins the {race_name} race with a "
+                              f"speed of {driver.car.speed_limit}.")
+            return "\n".join(result)
