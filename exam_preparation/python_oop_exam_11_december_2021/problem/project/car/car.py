@@ -1,9 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class Car:
-    MAX_SPEED = 0
-    MIN_SPEED = 0
+class Car(ABC):
 
     def __init__(self, model: str, speed_limit: int):
         self.model = model
@@ -26,6 +24,16 @@ class Car:
 
     @speed_limit.setter
     def speed_limit(self, value):
-        if self.MIN_SPEED <= value <= self.MIN_SPEED:
-            raise ValueError(f"Invalid speed limit! Must be between {self.MIN_SPEED} and {self.MAX_SPEED}!")
+        if self.min_speed > value or self.max_speed < value:
+            raise ValueError(f"Invalid speed limit! Must be between {self.min_speed} and {self.max_speed}!")
         self.__speed_limit = value
+
+    @property
+    @abstractmethod
+    def min_speed(self):
+        pass
+
+    @property
+    @abstractmethod
+    def max_speed(self):
+        pass

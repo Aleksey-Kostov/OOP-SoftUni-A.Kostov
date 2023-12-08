@@ -2,5 +2,10 @@ from project.car.car import Car
 
 
 class MuscleCar(Car):
-    MAX_SPEED = 250
-    MIN_SPEED = 450
+    @property
+    def min_speed(self):
+        return 250
+
+    @property
+    def max_speed(self):
+        return 450

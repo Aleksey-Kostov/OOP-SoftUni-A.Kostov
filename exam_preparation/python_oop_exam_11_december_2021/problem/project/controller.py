@@ -39,20 +39,21 @@ class Controller:
         find_driver = next((d for d in self.drivers if d.name == driver_name), None)
         if find_driver is None:
             raise Exception(f"Driver {driver_name} could not be found!")
-        last_car_type = next((c for c in self.cars[::-1] if c.__class__.__name__ == car_type and not c.is_taken), None)
+        last_car_type = next((c for c in self.cars[::-1] if c.__class__.__name__ == car_type and c.is_taken is False),
+                             None)
         if last_car_type is None:
             raise Exception(f"Car {car_type} could not be found!")
+        if find_driver.car is None:
+            last_car_type.is_taken = True
+            find_driver.car = last_car_type
+            return f"Driver {driver_name} chose the car {last_car_type.model}."
         if last_car_type and find_driver.car is not None:
             old_model = find_driver.car.model
             new_model = last_car_type.model
             find_driver.car.is_taken = False
-            last_car_type.is_taken = True
             find_driver.car = last_car_type
+            last_car_type.is_taken = True
             return f"Driver {find_driver.name} changed his car from {old_model} to {new_model}."
-        if find_driver.car is None:
-            find_driver.car = last_car_type
-            last_car_type.is_taken = True
-            return f"Driver {driver_name} chose the car {last_car_type.model}."
 
     def add_driver_to_race(self, race_name: str, driver_name: str):
         driver_obj = next((d for d in self.drivers if d.name == driver_name), None)
@@ -63,11 +64,11 @@ class Controller:
             raise Exception(f"Driver {driver_name} could not be found!")
         if driver_obj and driver_obj.car is None:
             raise Exception(f"Driver {driver_name} could not participate in the race!")
+        if driver_obj.name in [d.name for d in race_obj.drivers]:
+            return f"Driver {driver_name} is already added in {race_name} race."
         if driver_obj and race_obj and driver_obj.car is not None:
             race_obj.drivers.append(driver_obj)
             return f"Driver {driver_name} added in {race_name} race."
-        if driver_obj in race_obj.drivers:
-            return f"Driver {driver_name} is already added in {race_name} race."
 
     def start_race(self, race_name: str):
         race_obj = next((r for r in self.races if r.name == race_name), None)
