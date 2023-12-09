@@ -69,7 +69,7 @@ class NauticalCatchChallengeApp:
 
     def competition_statistics(self):
         result = []
-        sorted_divers = sorted(self.divers, key=lambda x: (x.competition_points, -len(x.catch), x.name))
+        sorted_divers = sorted(self.divers, key=lambda x: (-x.competition_points, -len(x.catch), x.name))
         if sorted_divers:
             for d in sorted_divers:
                 if d.has_health_issue is False:
