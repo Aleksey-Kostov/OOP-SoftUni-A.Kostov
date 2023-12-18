@@ -48,8 +48,9 @@ class TestTeam(TestCase):
         self.assertEqual(2, self.team1.__len__())
 
     def test___add__(self):
+        self.team1.new_team = Team("Asan")
 
-        self.assertEqual(Team("GoshoPesho"), self.team1.__add__(self.team2))
+        self.assertEqual(self.team1.new_team, self.team1.__add__(self.team2))
 
 
     def test___str__(self):
@@ -59,3 +60,4 @@ class TestTeam(TestCase):
 
 if __name__ == "__main__":
     main()
+
