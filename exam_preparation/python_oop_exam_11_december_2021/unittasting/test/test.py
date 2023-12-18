@@ -48,12 +48,19 @@ class TestTeam(TestCase):
         self.assertEqual(2, self.team1.__len__())
 
     def test___add__(self):
+<<<<<<< HEAD
+        self.team1.new_team = Team("Asan")
+
+        self.assertEqual(self.team1.new_team, self.team1.__add__(self.team2))
+
+=======
         self.team1.add_member(Timcho=30, Zlatko=35)
         self.team2.add_member(Ivan=30, Tosho=35)
         new_team = self.team1 + self.team2
         self.assertEqual("GoshoPesho", new_team.name)
         expected = {"Timcho": 30, "Zlatko": 35, "Ivan": 30, "Tosho": 35}
         self.assertEqual(expected, new_team.members)
+>>>>>>> origin/main
 
     def test___str__(self):
         self.team1.members = {"Alex": 25, "Borko": 30, "Iordan": 40}
