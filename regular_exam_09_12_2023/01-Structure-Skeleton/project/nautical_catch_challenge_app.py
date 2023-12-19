@@ -40,6 +40,7 @@ class NauticalCatchChallengeApp:
         if diver.has_health_issue is True:
             return f"{diver_name} will not be allowed to dive, due to health issues."
         if diver.oxygen_level < fish.time_to_catch:
+            diver.hit(fish)
             return f"{diver_name} missed a good {fish_name}."
         if diver.oxygen_level == fish.time_to_catch:
             if is_lucky is True:
@@ -60,11 +61,14 @@ class NauticalCatchChallengeApp:
             for d in divers:
                 d.has_health_issue = False
                 d.oxygen_level = d.CURRENT_OXYGEN_LEVEL
-            return f"Divers recovered: {len(divers)}"
+        return f"Divers recovered: {len(divers)}"
 
     def diver_catch_report(self, diver_name: str):
-        result = [f.fish_details() for f in self.fish_list]
-        result = "\n".join(result)
+        result = []
+        diver = next((d for d in self.divers if diver_name == d.name), None)
+        if diver:
+            result = [f.fish_details() for f in diver.catch]
+            result = "\n".join(result)
         return f"**{diver_name} Catch Report**\n{result}"
 
     def competition_statistics(self):

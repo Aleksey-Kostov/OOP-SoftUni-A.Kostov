@@ -44,6 +44,13 @@ class BaseDiver(ABC):
     def hit(self, fish: BaseFish):
         if self.oxygen_level < fish.time_to_catch:
             self.oxygen_level = 0
+            self.has_health_issue = True
+        elif self.oxygen_level == fish.time_to_catch:
+            self.oxygen_level -= fish.time_to_catch
+            self.catch.append(fish)
+            self.competition_points += fish.points
+            self.competition_points = round(self.competition_points, 1)
+            self.has_health_issue = True
         else:
             self.oxygen_level -= fish.time_to_catch
             self.catch.append(fish)
