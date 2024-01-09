@@ -53,3 +53,4 @@ print(nautical_catch_challenge.diver_catch_report("LilaMoreno"))
 
 # View competition statistics
 print(nautical_catch_challenge.competition_statistics())
+
