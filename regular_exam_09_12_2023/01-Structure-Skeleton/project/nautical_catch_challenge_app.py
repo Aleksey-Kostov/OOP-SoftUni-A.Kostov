@@ -82,4 +82,3 @@ class NauticalCatchChallengeApp:
         result = "\n".join(result)
         return f"**Nautical Catch Challenge Statistics**\n{result}"
 
-
